@@ -4,6 +4,6 @@ services:
     container_name: llama-index-sample
     build: .
     volumes:
-      - ./llama_index_sample:/var/app/llama_index_sample
+      - ./:/var/app
     env_file:
       - .env
