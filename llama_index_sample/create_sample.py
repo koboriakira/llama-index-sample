@@ -16,7 +16,7 @@ def handle():
 
     # リンクページからタイトル、本文を集める
     for link in links:
-        time.sleep(0)
+        time.sleep(5)
         print(link)
         html = get(base_url + link)
         soup = Soup(html)
