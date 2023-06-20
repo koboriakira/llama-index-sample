@@ -1,5 +1,7 @@
 from gazpacho import get, Soup
 import time
+import re
+import os
 
 def handle():
     base_url = 'https://help.qiita.com/'
@@ -24,16 +26,15 @@ def handle():
         else:
             title = title_element.text
 
-        text_elements = soup.find('article', {'class': 'l-main'}).find('p')
-        if isinstance(text_elements, list):
-            text = '\n'.join([e.text for e in text_elements])
-        else:
-            text = text_elements.text
-        if text is None or text == '':
+        article = soup.find('article', {'class': 'l-main'})
+        if article is None:
             continue
+        text = re.sub(re.compile('<.*?>'), '', article.html)
 
-        # テキストを保存する
-        with open(title + '.txt', 'w') as f:
+        # 保存する
+        if not os.path.exists("sample_data"):
+            os.makedirs("sample_data")
+        with open("./sample_data/" + title + '.txt', 'w+') as f:
             f.write(text)
 
 # python -m llama_index_sample.create_sample
